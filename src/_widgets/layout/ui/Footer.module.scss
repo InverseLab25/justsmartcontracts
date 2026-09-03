@@ -10,7 +10,7 @@
   @include content;
 
   padding-top: 16px;
-  padding-bottom: 16px;
+  padding-bottom: 4px;
 
   display: flex;
   flex-wrap: wrap;
@@ -33,4 +33,17 @@
 .address {
   font-family: var(--font-mono);
   overflow-wrap: anywhere;
+}
+
+// A second, quieter line under the main row. Credit belongs where people can
+// see it, but it shouldn't compete with the links above it.
+.credit {
+  @include container;
+  @include content;
+
+  padding-bottom: 16px;
+
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.6;
 }

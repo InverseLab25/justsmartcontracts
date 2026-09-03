@@ -1,46 +1,59 @@
 ## Description
 
-This is source code of [justsmartcontracts.dev](https://justsmartcontracts.dev) website.
+A web tool for interacting with Ethereum smart contracts: add a contract by
+address and ABI, read its properties, call its functions, build and sign
+transactions, and search its events.
 
-[What is justsmartcontracts.dev?](https://medium.com/coinmonks/introducing-justsmartcontracts-dev-web-tool-for-interacting-with-ethereum-smart-contracts-da9b5dfe563c) Basically it is a web tool for interacting with Ethereum smart contracts. It was initially developed by my friend and me in order to provide a better experience for Ethereum smart contracts developers and blockchain enthusiasts.
+## Credits
+
+This project is based on [olekon/justsmartcontracts](https://github.com/olekon/justsmartcontracts),
+the original [justsmartcontracts.dev](https://justsmartcontracts.dev) built by
+Oleg Kondrakhanov and Alexey Kuzmin. All credit for the original tool and its
+design goes to them.
+
+[What is justsmartcontracts.dev?](https://medium.com/coinmonks/introducing-justsmartcontracts-dev-web-tool-for-interacting-with-ethereum-smart-contracts-da9b5dfe563c)
 
 ## Prerequisites
 
-Website was developed using Node.js 8.4.0.
+Node.js 20.9 or newer, and [pnpm](https://pnpm.io).
 
 ## Running locally
 
-Download the project and navigate to the root folder (the one with this file), then execute
+Download the project and navigate to the root folder (the one with this file),
+then execute
 
-`npm install`
+`pnpm install`
 
-`npm run dev`
+`pnpm dev`
 
-Website will be accessible on http://localhost:8080/
+The website will be accessible on http://localhost:3000
 
-If you want website to use https instead of http, execute
+To type check, execute
 
-`npm run devs`
+`pnpm ts`
 
-To build the bundle, execute
+To build the production bundle, execute
 
-`npm run build`
+`pnpm build`
 
-### Using local API server
+## Configuration
 
-You may want to use local backend application (API server). In that case please visit its [repository](https://github.com/olekon/justsmartcontracts-api) and follow launch instructions.
+One optional setting, read from an environment file in the project root.
 
-Then open this project's `config.js` file and locate `server` section. Set url to your local API server, for example
+- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` adds WalletConnect to the wallet
+  picker. Without it, only browser wallets and Coinbase Wallet are offered.
 
-    server: {
-        url: 'http://localhost:3000'
-    }
+Chain data is fetched from [chainid.network](https://chainid.network), with a
+bundled snapshot as a fallback when that request fails. RPC endpoints come from
+that list, so no API key is needed.
 
 ## Contributing
 
 Please see the [CONTRIBUTING.md](./CONTRIBUTING.md) file for details
 
 ## Authors
+
+Original project:
 
 - Oleg Kondrakhanov - [olekon](https://github.com/olekon)
 - Alexey Kuzmin - [32kaa](https://github.com/32kaa)

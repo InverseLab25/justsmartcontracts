@@ -36,6 +36,14 @@ export const Footer = () => {
           />
         </Tooltip>
       </div>
+
+      <div className={styles.credit}>
+        Based on{" "}
+        <ExternalLink href="https://github.com/olekon/justsmartcontracts">
+          justsmartcontracts
+        </ExternalLink>{" "}
+        by olekon and 32kaa
+      </div>
     </div>
   );
 };
