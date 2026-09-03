@@ -1,0 +1,14 @@
+// Sits under the Gas limit input as its error text, so it has to stay compact.
+.revert {
+  display: inline-block;
+  line-height: 1.5;
+}
+
+// The raw payload, for pasting into an explorer when the decoded name looks
+// wrong or nothing could be decoded at all.
+.revertData {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  opacity: 0.7;
+  overflow-wrap: anywhere;
+}

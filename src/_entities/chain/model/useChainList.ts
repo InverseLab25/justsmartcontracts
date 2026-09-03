@@ -1,6 +1,5 @@
-import useSWRImmutable from "swr/immutable";
+import { useQuery } from "@tanstack/react-query";
 import { TChain } from "./types";
-import DefaultChainsRaw from "./defaultChains.json";
 
 const Endpoint = "https://chainid.network/chains.json";
 
@@ -15,7 +14,12 @@ const rawToTChain = (item: any): TChain => {
   };
 };
 
-const DefaultChains = DefaultChainsRaw.map(rawToTChain);
+// Only reached when the network fetch fails. Imported dynamically so the ~280KB
+// chain dump lands in its own chunk instead of the main bundle.
+const loadDefaultChains = async (): Promise<TChain[]> => {
+  const { default: raw } = await import("./defaultChains.json");
+  return (raw as any[]).map(rawToTChain);
+};
 
 const fetcher = async (endpoint: string) => {
   try {
@@ -33,7 +37,7 @@ const fetcher = async (endpoint: string) => {
       .map(rawToTChain);
   } catch (e) {
     console.log(e);
-    return DefaultChains;
+    return loadDefaultChains();
   }
 };
 
@@ -48,17 +52,26 @@ type TChainListContext =
     };
 
 export const useChainList = (): TChainListContext => {
-  const response = useSWRImmutable(Endpoint, fetcher);
+  // Was swr. react-query is already here for wagmi, so this drops a dependency
+  // rather than adding one. The list never changes mid-session, hence no
+  // staleness or refetching.
+  const response = useQuery({
+    queryKey: ["chains", Endpoint],
+    queryFn: () => fetcher(Endpoint),
+    staleTime: Infinity,
+    gcTime: Infinity,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
-  if (response.isLoading) {
+  // The fetcher resolves to the bundled defaults rather than throwing, so no
+  // data means it is genuinely still in flight.
+  if (response.isLoading || !response.data) {
     return {
       loading: true,
       chains: null,
     };
-  }
-
-  if (!response.data) {
-    return { loading: false, chains: DefaultChains };
   }
 
   return { loading: false, chains: response.data };

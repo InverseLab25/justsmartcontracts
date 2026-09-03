@@ -14,7 +14,7 @@ export type TWithSize = {
   size?: TSize;
 };
 
-export type TValueHandler<T> = (_value: T) => void;
+type TValueHandler<T> = (_value: T) => void;
 
 export type TValueInput<T> = {
   onChange: TValueHandler<T>;

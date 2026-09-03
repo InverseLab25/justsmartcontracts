@@ -1,5 +1,5 @@
-import { Input, Select } from "antd";
-import { useState } from "react";
+import { Input, Select, Space } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { formatUnits, parseUnits } from "viem";
 import { TValueInput } from "@shared/lib/props";
 
@@ -64,6 +64,20 @@ export const AmountInput = ({
 
   const [mode, setMode] = useState(defaultMode);
 
+  // What we last sent up. Anything else arriving in `value` came from outside -
+  // the gas estimate writing into the form, say - and has to be shown.
+  const emitted = useRef(value);
+
+  // Without this the displayed text is seeded once on mount and never updated,
+  // so "Max fee per gas" and "Max priority fee per gas" sat at 0 while the form
+  // actually held the estimated values.
+  useEffect(() => {
+    if (value !== emitted.current) {
+      emitted.current = value;
+      setFormatted(convertFromWei(mode, value));
+    }
+  }, [value, mode]);
+
   const handleModeChange = (newMode: Mode) => {
     //convert stored value from old mode to new mode
     const weis = convertToWei(mode, formatted);
@@ -78,25 +92,27 @@ export const AmountInput = ({
     if ((!Number.isNaN(e) && reg.test(e)) || e === "") {
       setFormatted(e);
 
-      onChange(convertToWei(mode, e || "0"));
+      const weis = convertToWei(mode, e || "0");
+      emitted.current = weis;
+      onChange(weis);
     }
   };
 
-  const modeSelect = (
-    <Select
-      options={options}
-      defaultValue={defaultMode}
-      style={{ width: 80 }}
-      onChange={handleModeChange}
-    />
-  );
-
+  // Was Input addonAfter, which antd 5.29 deprecates in favour of Space.Compact.
   return (
-    <Input
-      disabled={disabled}
-      addonAfter={modeSelect}
-      value={formatted}
-      onChange={(e) => handleValueChange(e.target.value)}
-    />
+    <Space.Compact style={{ width: "100%" }}>
+      <Input
+        disabled={disabled}
+        value={formatted}
+        onChange={(e) => handleValueChange(e.target.value)}
+      />
+      <Select
+        options={options}
+        defaultValue={defaultMode}
+        style={{ width: 88, flex: "none" }}
+        onChange={handleModeChange}
+        disabled={disabled}
+      />
+    </Space.Compact>
   );
 };

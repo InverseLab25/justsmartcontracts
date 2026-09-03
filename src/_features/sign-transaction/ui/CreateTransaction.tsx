@@ -8,10 +8,10 @@ type TProps = {
 };
 
 export const CreateTransaction = ({ contract, abiItem }: TProps) => {
-  const [args, setArgs] = useState<string[] | null>(null);
+  const [args, setArgs] = useState<unknown[] | null>(null);
   const [formUpdate, setFormUpdate] = useState(0);
 
-  const createTransaction = (values: string[]) => {
+  const createTransaction = (values: unknown[]) => {
     setArgs(values);
     setFormUpdate((state) => state + 1);
   };

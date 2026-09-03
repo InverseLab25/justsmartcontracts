@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name {
+  // Pushes the switch and buttons into a consistent column across filters
+  // instead of letting each row start wherever the name happens to end.
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  // Indents the inputs under their filter name so it reads as one group.
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+}

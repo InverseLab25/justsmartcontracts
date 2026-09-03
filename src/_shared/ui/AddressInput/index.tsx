@@ -16,12 +16,14 @@ export const AddressInput = ({
 }: TProps) => {
   return (
     <Input
-      width="100%"
       maxLength={42}
       className={className}
       value={value}
       onChange={(e) => onChange(e.target.value as TAddress)}
-      addonBefore={<AddressIcon address={value} size="small" />}
+      // Was addonBefore, which antd 5.29 deprecates. prefix puts the icon
+      // inside the field instead of in a separate grey box, which also gives
+      // the address text the full width to itself.
+      prefix={<AddressIcon address={value} size="small" />}
       autoComplete="off"
       disabled={disabled}
     />

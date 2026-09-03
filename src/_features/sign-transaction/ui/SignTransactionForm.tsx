@@ -7,10 +7,12 @@ import { AmountInput, Mode } from "@shared/ui/AmountInput";
 import { useTransactionParamsForm } from "../model";
 import { DownloadTransaction } from "./DownloadTransaction";
 
+import styles from "./SignTransactionForm.module.scss";
+
 type TProps = {
   contract: TContract;
   abiItem: TAbiFunction;
-  args: string[];
+  args: unknown[];
   disabled?: boolean;
   onSubmit: (_values: TTransactionParams) => void;
 };
@@ -22,7 +24,7 @@ export const SignTransactionForm = ({
   disabled,
   onSubmit,
 }: TProps) => {
-  const { form, initialValues, payable, onValuesChange } =
+  const { form, initialValues, payable, onValuesChange, gasError } =
     useTransactionParamsForm(contract, abiItem, args);
 
   return (
@@ -81,6 +83,23 @@ export const SignTransactionForm = ({
             label="Gas limit"
             name="gas"
             rules={[{ required: true, message: "Gas limit missing" }]}
+            // Replaces the required-field message while a revert is known:
+            // "Gas limit missing" is true but useless next to the real reason.
+            {...(gasError && {
+              validateStatus: "error" as const,
+              help: (
+                <span className={styles.revert}>
+                  {gasError.gasError}{" "}
+                  {gasError.gasErrorData && (
+                    <code className={styles.revertData}>
+                      {gasError.gasErrorData}
+                    </code>
+                  )}
+                  <br />
+                  Enter a limit to send anyway
+                </span>
+              ),
+            })}
           >
             <Input type="number" />
           </Form.Item>

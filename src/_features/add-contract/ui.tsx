@@ -1,8 +1,17 @@
 import { useCallback, useState } from "react";
-import { Modal, Button } from "antd";
+import dynamic from "next/dynamic";
+import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { ContractForm, TContractWithoutId } from "@entities/contract";
+import { TContractWithoutId } from "@entities/contract";
 import { useAddContact } from "./model";
+
+const ContractFormModal = dynamic(
+  () =>
+    import("@entities/contract/ui/ContractFormModal").then(
+      (m) => m.ContractFormModal
+    ),
+  { ssr: false }
+);
 
 export const AddContractButton = () => {
   const [formVisible, setFormVisible] = useState(false);
@@ -26,15 +35,14 @@ export const AddContractButton = () => {
         Add contract
       </Button>
 
-      <Modal
-        title="Add new contract"
-        open={formVisible}
-        footer={null}
-        onCancel={hideModal}
-        destroyOnClose
-      >
-        <ContractForm buttonText="Add" onSubmit={onSubmit} />
-      </Modal>
+      {formVisible && (
+        <ContractFormModal
+          title="Add new contract"
+          buttonText="Add"
+          onSubmit={onSubmit}
+          onCancel={hideModal}
+        />
+      )}
     </>
   );
 };

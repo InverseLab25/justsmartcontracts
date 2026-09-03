@@ -1,22 +1,40 @@
-import { FlexHorizontal } from "@shared/ui/Grid";
-import styles from "./Footer.module.scss";
+import { Button, Tooltip } from "antd";
+import { CopyOutlined } from "@ant-design/icons";
 import { ExternalLink } from "@shared/ui/ExternalLink";
+import { useCopyToClipboard } from "@shared/lib/clipboard";
+
+import styles from "./Footer.module.scss";
+
+const DonationAddress = "0x43283C9B024659FA5F8A679B193B75C15D2Ecc87";
 
 export const Footer = () => {
+  const copy = useCopyToClipboard();
+
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <FlexHorizontal>
-          <ExternalLink href="https://github.com/olekon/justsmartcontracts">
-            GitHub
-          </ExternalLink>
-          <p>|</p>
-          <ExternalLink href="mailto:contact@justsmartcontracts.dev">
-            Email
-          </ExternalLink>
-          <p>|</p>
-          <p>Donations: 0x6d661B87C66D717F688d47796D7068B41D0a8730</p>
-        </FlexHorizontal>
+        <ExternalLink href="https://github.com/olekon/justsmartcontracts">
+          GitHub
+        </ExternalLink>
+
+        <span className={styles.dot}>·</span>
+
+        <ExternalLink href="https://x.com/atarpara">X</ExternalLink>
+
+        <span className={styles.dot}>·</span>
+
+        <span className={styles.label}>Donations</span>
+        <span className={styles.address}>{DonationAddress}</span>
+
+        <Tooltip title="Copy donation address">
+          <Button
+            type="text"
+            size="small"
+            aria-label="Copy donation address"
+            icon={<CopyOutlined />}
+            onClick={() => copy(DonationAddress, "Donation address copied")}
+          />
+        </Tooltip>
       </div>
     </div>
   );

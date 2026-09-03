@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { cn as cx } from "@shared/lib/cn";
 import { TWithChildren, TWithClassname } from "@shared/lib/props";
 import styles from "./ExternalLink.module.scss";
 

@@ -1,0 +1,25 @@
+// Two columns where there's room, one on narrow screens. A function with eight
+// uint args was eight full-width rows of vertical scrolling.
+//
+// Columns are capped rather than 1fr so fields keep a sensible size on a wide
+// monitor instead of stretching edge to edge. The 340px floor is a full 42
+// character address plus its icon addon.
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 420px));
+  justify-content: start;
+  column-gap: 16px;
+  row-gap: 0;
+  align-items: start;
+}
+
+// Structs and arrays bring their own nested layout and are tall, so they take
+// the full width rather than being squeezed into half of one.
+.wide {
+  grid-column: 1 / -1;
+}
+
+// Same reasoning as the column cap, for forms too short to use columns.
+.single {
+  max-width: 860px;
+}

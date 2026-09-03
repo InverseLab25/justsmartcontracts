@@ -5,7 +5,7 @@ import { Alert, Spin } from "antd";
 type TProps = {
   contract: TContract;
   abiItem: TAbiFunction;
-  args: string[];
+  args: unknown[];
 };
 export const FetchCallResult = ({ contract, abiItem, args }: TProps) => {
   const { data, error, loading } = useContractCall(contract, abiItem, args);
@@ -18,5 +18,5 @@ export const FetchCallResult = ({ contract, abiItem, args }: TProps) => {
     <Alert message={error.message} type="error" />;
   }
 
-  return <ParamValue value={data} abiType={abiItem.outputs[0].type} />;
+  return <ParamValue value={data} abiParam={abiItem.outputs[0]} />;
 };

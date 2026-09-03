@@ -1,8 +1,9 @@
 import { Button, Switch } from "antd";
-import { TEventFilter } from "../model/types";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { ParamInput } from "@entities/contract";
-import { FlexHorizontal, FlexVertical } from "@shared/ui/Grid";
+import { TEventFilter } from "../model/types";
+
+import styles from "./EventFilterInput.module.scss";
 
 type TProps = {
   name: string;
@@ -22,31 +23,38 @@ export const EventFilterInput = ({
   update,
 }: TProps) => {
   return (
-    <FlexVertical>
-      <FlexHorizontal>
-        <b>{`${name} (${filter.type})`}</b>
-        <Switch onChange={enable} />
-        <Button size="small" onClick={add} disabled={!filter.active}>
-          <PlusOutlined />
-        </Button>
+    <div className={styles.root}>
+      <div className={styles.header}>
+        <b className={styles.name}>{`${name} (${filter.type})`}</b>
+        <Switch checked={filter.active} onChange={enable} />
         <Button
           size="small"
+          aria-label={`Add ${name} value`}
+          icon={<PlusOutlined />}
+          onClick={add}
+          disabled={!filter.active}
+        />
+        <Button
+          size="small"
+          aria-label={`Remove ${name} value`}
+          icon={<MinusOutlined />}
           disabled={filter.values.length <= 1 || !filter.active}
           onClick={remove}
-        >
-          <MinusOutlined />
-        </Button>
-      </FlexHorizontal>
-      <FlexVertical size="small">
-        {filter.values.map((item, index) => (
-          <ParamInput
-            key={index}
-            abiParam={filter.type}
-            onChange={(value) => update(index, value)}
-            value={item}
-          />
-        ))}
-      </FlexVertical>
-    </FlexVertical>
+        />
+      </div>
+
+      {filter.active && filter.values.length > 0 && (
+        <div className={styles.values}>
+          {filter.values.map((item, index) => (
+            <ParamInput
+              key={index}
+              abiParam={filter.type}
+              onChange={(value) => update(index, String(value))}
+              value={item}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };

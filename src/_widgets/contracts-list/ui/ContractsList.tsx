@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { cn } from "@shared/lib/cn";
 import { AddContractButton } from "@features/add-contract";
 import { RemoveContractButton } from "@features/remove-contract";
 import { EditContractButton } from "@features/edit-contract";

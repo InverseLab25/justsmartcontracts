@@ -1,14 +1,38 @@
-/public/bundle.js
+# dependencies
 /node_modules
+
+# builds
+/.next
+/out
+/public/bundle.js
 /src/stubs/smarts/build
+*.tsbuildinfo
+
+# env files - previously only the .local variant was ignored, so a plain
+# env file sitting in the project root could be committed by accident
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# deploy
+/.vercel
+
+# editors
 /.vscode
 /.idea
+
+# os
+.DS_Store
+Thumbs.db
+
+# misc
 /tmp
 ~*
 *.zip
-.DS_Store
-
-/.next
-.env.local
-
-*.tsbuildinfo

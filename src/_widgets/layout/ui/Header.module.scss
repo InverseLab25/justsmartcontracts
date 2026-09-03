@@ -1,29 +1,39 @@
-@import "styles/utils.scss";
+@use "styles/utils.scss" as *;
 
 .root {
-  background: #fdf4e3;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
 .content {
   @include container;
   @include content;
 
-  padding-top: 30px;
-  padding-bottom: 30px;
+  // Was 30px top and bottom, which made the bar taller than it needed to be
+  // for a single row of controls.
+  padding-top: 16px;
+  padding-bottom: 16px;
 
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+}
+
+.brand {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .chainSelect {
-  min-width: 200px;
-}
-
-.wallet {
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  margin-left: auto;
+  width: 180px;
 }

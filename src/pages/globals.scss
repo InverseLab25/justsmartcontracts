@@ -1,7 +1,43 @@
+@mixin dark-tokens {
+  --background: #16181d;
+  --foreground: #e6e6e6;
+  --surface: #1f2229;
+  --border: #33383f;
+  --link: #4d9bff;
+
+  --wallet-background: #10243e;
+  --wallet-border: #1d4a80;
+  --wallet-foreground: #a4cdff;
+}
+
 :root {
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+  --background: #f9f9fb;
+  --foreground: #1f1f1f;
+  --surface: #ffffff;
+  --border: #e8e8e8;
+  --link: #1677ff;
+
+  --wallet-background: #e6f4ff;
+  --wallet-border: #91caff;
+  --wallet-foreground: #003eb3;
+}
+
+// The theme entity stamps data-theme on <html>. Everything themed lives here as
+// a variable so components never need their own dark-mode branch.
+:root[data-theme="dark"] {
+  @include dark-tokens;
+}
+
+// Covers the first paint, before React has mounted and stamped data-theme. A
+// stored "light" choice opts out, so this never fights an explicit setting.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-tokens;
+  }
 }
 
 * {
@@ -16,23 +52,12 @@ body {
 
   overflow-x: hidden;
 
-  background: #f9f9fb;
-  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

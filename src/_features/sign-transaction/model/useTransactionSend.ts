@@ -1,51 +1,40 @@
-import { TTransactionParams, stringToNative } from "@shared/lib/tx";
 import { useCallback, useState } from "react";
 import { useSendTransaction } from "wagmi";
-import { sendTransaction } from "@wagmi/core";
+import { TTransactionParams, stringToNative } from "@shared/lib/tx";
 import { TChainId, THexString } from "@shared/lib/web3";
 import { walletModel } from "@entities/wallet";
 
 import { useWatchTxNotification } from "./useTxNotification";
 
 const convertTx = (tx: TTransactionParams) => ({
-  ...tx,
+  to: tx.to,
+  data: tx.data,
+  nonce: tx.nonce,
   gas: stringToNative(tx.gas),
   value: stringToNative(tx.value),
 });
 
-export const usePrepareTransactionSend = (tx?: TTransactionParams) => {
-  const args = tx && convertTx(tx);
-  const { data, isLoading, isSuccess, sendTransaction } =
-    useSendTransaction(args);
-
-  return {
-    send: sendTransaction,
-    hash: data?.hash,
-    inProgress: isLoading,
-    success: isSuccess,
-  };
-};
-
 export const useTransactionSend = (chain: TChainId) => {
-  const [txHash, setTxHash] = useState("");
+  const [txHash, setTxHash] = useState<THexString | undefined>(undefined);
 
   const switchChain = walletModel.useSwitchWalletChain(chain);
+  const { sendTransactionAsync } = useSendTransaction();
 
   const send = useCallback(
     async (tx: TTransactionParams) => {
       try {
         if (await switchChain()) {
-          const { hash } = await sendTransaction(convertTx(tx));
+          const hash = await sendTransactionAsync(convertTx(tx));
           setTxHash(hash);
         }
       } catch (e) {
         console.log(e);
       }
     },
-    [switchChain]
+    [switchChain, sendTransactionAsync]
   );
 
-  useWatchTxNotification(chain, txHash as THexString);
+  useWatchTxNotification(chain, txHash);
 
   return {
     hash: txHash,

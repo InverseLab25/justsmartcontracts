@@ -1,14 +1,17 @@
 import { TUid } from "@shared/lib/id";
-import { GetLogsReturnType, AbiItem as ViemAbiItem } from "viem";
 import type {
-  AbiParameter as ViemAbiParameter,
+  Abi,
   AbiEvent as ViemAbiEvent,
-  AbiConstructor as ViemAbiConstructor,
   AbiFunction as ViemAbiFunction,
-} from "abitype";
+  AbiItem as ViemAbiItem,
+  AbiParameter as ViemAbiParameter,
+  GetLogsReturnType,
+} from "viem";
 import { TChainId, TAddress } from "@shared/lib/web3";
 
-export type TAbiConstructor = ViemAbiConstructor;
+// viem re-exports abitype's types, so we don't depend on abitype directly.
+// AbiConstructor is the one it leaves out, hence picking it off the union.
+export type TAbiConstructor = Extract<Abi[number], { type: "constructor" }>;
 export type TAbiEvent = ViemAbiEvent;
 export type TAbiFunction = ViemAbiFunction;
 export type TAbiItem = ViemAbiItem;

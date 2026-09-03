@@ -1,12 +1,20 @@
 .root {
-  display: flex;
+  display: inline-flex;
   gap: 8px;
   align-items: center;
-  padding: 4px 8px;
+  // Matches the antd Select next to it so the header reads as one row.
+  height: 32px;
+  padding: 0 12px;
   border-radius: 16px;
 
   font-size: small;
 
-  background: #e6f4ff;
-  border: 1px solid #003eb3;
+  background: var(--wallet-background);
+  border: 1px solid var(--wallet-border);
+  color: var(--wallet-foreground);
+}
+
+.address {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
 }

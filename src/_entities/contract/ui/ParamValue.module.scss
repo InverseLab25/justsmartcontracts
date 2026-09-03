@@ -1,0 +1,44 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Zero-based to match how the array is indexed in Solidity. Fixed width so the
+// values line up in a column instead of stepping right as the index grows.
+.index {
+  flex: none;
+  width: 24px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: small;
+  opacity: 0.45;
+}
+
+.tuple {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.fieldName {
+  font-size: small;
+  opacity: 0.7;
+  min-width: 90px;
+}
+
+.empty {
+  opacity: 0.5;
+}

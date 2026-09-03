@@ -1,0 +1,39 @@
+.group {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+}
+
+.groupLabel {
+  margin-bottom: 8px;
+  font-size: small;
+  opacity: 0.75;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rowField {
+  flex: 1;
+  min-width: 0;
+}
+
+// antd defaults to 24px here, which reads as a gap once fields sit side by side.
+.field {
+  margin-bottom: 16px;
+}
+
+// Every scalar field gets the same width, matching one grid column.
+//
+// Two reasons. A full-bleed number input pushes its wei/gwei/eth selector to the
+// far edge of the window, so switching units meant dragging the cursor the whole
+// way across. And sizing per type left a ragged right edge, with a struct's
+// inner fields not lining up with the outer ones. 420px fits a full 42 character
+// address plus its icon addon.
+.scalar {
+  max-width: 420px;
+}

@@ -6,7 +6,7 @@ export const Row = ({ children }: TWithChildren) => (
   <AntRow gutter={8}>{children}</AntRow>
 );
 
-export const Col = ({
+const Col = ({
   children,
   share = 2,
 }: TWithChildren & { share?: number }) => (

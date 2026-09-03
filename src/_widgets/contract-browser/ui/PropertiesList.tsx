@@ -1,4 +1,4 @@
-import { AbiFunction } from "abitype";
+import { TAbiFunction } from "@entities/contract";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { TContract, contractModel } from "@entities/contract";
@@ -11,7 +11,7 @@ type TProps = {
 export const PropertiesList = ({ contract }: TProps) => {
   const functions = contractModel.useContractProperties(contract);
 
-  const columns: ColumnsType<AbiFunction> = [
+  const columns: ColumnsType<TAbiFunction> = [
     {
       title: "Name",
       dataIndex: "name",

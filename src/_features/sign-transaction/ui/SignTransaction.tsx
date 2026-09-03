@@ -6,7 +6,7 @@ import { useTransactionSend } from "../model/useTransactionSend";
 type TProps = {
   contract: TContract;
   abiItem: TAbiFunction;
-  args: string[];
+  args: unknown[];
 };
 
 export const SignTransaction = ({ contract, abiItem, args }: TProps) => {

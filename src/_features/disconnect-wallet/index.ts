@@ -1,0 +1,1 @@
+export { ConnectedWallet } from "./ui";

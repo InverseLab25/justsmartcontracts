@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { TChainId } from "@shared/lib/web3";
-import urlJoin from "url-join";
+import { joinUrl } from "@shared/lib/url";
 import { useChainListSafe } from "./useChainList";
 
 export const useChainConfig = (chain: TChainId) => {
@@ -25,14 +25,14 @@ export const useChainExplorer = (chain: TChainId) => {
 
   const getTxUrl = useCallback(
     (txHash: string) => {
-      return url ? urlJoin(url, `tx/${txHash}`) : "";
+      return url ? joinUrl(url, `tx/${txHash}`) : "";
     },
     [url]
   );
 
   const getAddressUrl = useCallback(
     (address: string) => {
-      return url ? urlJoin(url, `address/${address}`) : "";
+      return url ? joinUrl(url, `address/${address}`) : "";
     },
     [url]
   );

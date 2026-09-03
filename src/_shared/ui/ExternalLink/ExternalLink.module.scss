@@ -1,5 +1,5 @@
 .root {
-  color: #1677ff;
+  color: var(--link);
   &:hover {
     text-decoration: underline;
   }

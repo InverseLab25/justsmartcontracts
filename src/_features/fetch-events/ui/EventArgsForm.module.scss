@@ -1,0 +1,38 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// antd gives every Form.Item a 24px bottom margin, which stacked with the
+// wrapper gap and left big holes between the block inputs and the filters.
+.field {
+  margin-bottom: 0;
+}
+
+.blocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.block {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.hint {
+  margin-top: 4px;
+  font-size: small;
+  opacity: 0.65;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.divider {
+  margin: 0;
+}

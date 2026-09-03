@@ -1,32 +1,36 @@
-import type { TAbiItem, TAbiParamType } from "../model/types";
+export * from "./abiValue";
 
-import { AbiConstructor, AbiEvent, AbiFunction } from "abitype";
+import { isArrayType } from "./abiValue";
 
-const isReadonlyFunction = (item: TAbiItem): item is AbiFunction =>
+import type {
+  TAbiConstructor,
+  TAbiEvent,
+  TAbiFunction,
+  TAbiItem,
+  TAbiParamType,
+} from "../model/types";
+
+const isReadonlyFunction = (item: TAbiItem): item is TAbiFunction =>
   item.type == "function" &&
   (item.stateMutability == "pure" || item.stateMutability == "view");
 
-const isWriteFunction = (item: TAbiItem): item is AbiFunction =>
+const isWriteFunction = (item: TAbiItem): item is TAbiFunction =>
   item.type == "function" && !isReadonlyFunction(item);
 
-export const isAbiItemProperty = (item: TAbiItem): item is AbiFunction =>
+export const isAbiItemProperty = (item: TAbiItem): item is TAbiFunction =>
   isReadonlyFunction(item) && item.inputs.length == 0;
 
-export const isAbiItemParamCall = (item: TAbiItem): item is AbiFunction =>
+export const isAbiItemParamCall = (item: TAbiItem): item is TAbiFunction =>
   isReadonlyFunction(item) && item.inputs.length !== 0;
 
-export const isAbiItemOperation = (item: TAbiItem): item is AbiFunction =>
+export const isAbiItemOperation = (item: TAbiItem): item is TAbiFunction =>
   isWriteFunction(item);
 
-export const isAbiItemEvent = (item: TAbiItem): item is AbiEvent =>
+export const isAbiItemEvent = (item: TAbiItem): item is TAbiEvent =>
   item.type === "event";
 
-export const isAbiItemConstructor = (item: TAbiItem): item is AbiConstructor =>
+export const isAbiItemConstructor = (item: TAbiItem): item is TAbiConstructor =>
   item.type === "constructor";
-
-export const isArrayType = (param: TAbiParamType) => param.endsWith("]");
-
-export const getArrayItemType = (param: TAbiParamType) => param.slice(0, -2);
 
 export const getDefaultValue = (param: TAbiParamType) => {
   switch (param) {

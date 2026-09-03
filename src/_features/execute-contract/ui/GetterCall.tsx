@@ -11,7 +11,7 @@ type TProps = {
 };
 
 export const GetterCall = ({ contract, abiItem }: TProps) => {
-  const [args, setArgs] = useState<string[] | null>(null);
+  const [args, setArgs] = useState<unknown[] | null>(null);
 
   return (
     <div className={styles.root}>

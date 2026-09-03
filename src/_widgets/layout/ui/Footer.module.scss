@@ -1,13 +1,36 @@
-@import 'styles/utils.scss';
+@use "styles/utils.scss" as *;
 
 .root {
-  background: #fdf4e3;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
 }
 
 .content {
   @include container;
   @include content;
 
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: small;
+}
+
+.dot {
+  opacity: 0.35;
+}
+
+.label {
+  opacity: 0.65;
+}
+
+// The address is long; let it wrap rather than push the row wider than the page.
+.address {
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
 }

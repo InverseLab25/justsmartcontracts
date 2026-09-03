@@ -1,0 +1,5 @@
+# @types/react-blockies drags in an older @types/react. Two copies in the tree
+# make every third-party component fail the JSX element check, so pin one.
+overrides:
+  "@types/react": 18.3.31
+  "@types/react-dom": 18.3.7
