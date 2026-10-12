@@ -1,0 +1,40 @@
+diff --git a/es/isEqual.js b/es/isEqual.js
+index 703e47a8b7114025a166ecdbf765ee1aa37f4fbf..0828450f04f1342603accb7a05d45f89123fdb15 100644
+--- a/es/isEqual.js
++++ b/es/isEqual.js
+@@ -26,7 +26,14 @@ function isEqual(obj1, obj2) {
+       return false;
+     }
+     refSet.add(a);
+-    var newLevel = level + 1;
++    // Track only the current path, not everything ever visited: a value shared by
++    // two siblings (rc-field-form uses one EMPTY_ERRORS array for both errors
++    // and warnings) is not a cycle.
++    var result = compare(a, b, level + 1);
++    refSet.delete(a);
++    return result;
++  }
++  function compare(a, b, newLevel) {
+     if (Array.isArray(a)) {
+       if (!Array.isArray(b) || a.length !== b.length) {
+         return false;
+diff --git a/lib/isEqual.js b/lib/isEqual.js
+index af34622fe2535fbeb037f6a859e4ceb165147fa4..8a737b41346b0352c5e034e41a65485e1b9ead00 100644
+--- a/lib/isEqual.js
++++ b/lib/isEqual.js
+@@ -32,7 +32,14 @@ function isEqual(obj1, obj2) {
+       return false;
+     }
+     refSet.add(a);
+-    var newLevel = level + 1;
++    // Track only the current path, not everything ever visited: a value shared by
++    // two siblings (rc-field-form uses one EMPTY_ERRORS array for both errors
++    // and warnings) is not a cycle.
++    var result = compare(a, b, level + 1);
++    refSet.delete(a);
++    return result;
++  }
++  function compare(a, b, newLevel) {
+     if (Array.isArray(a)) {
+       if (!Array.isArray(b) || a.length !== b.length) {
+         return false;

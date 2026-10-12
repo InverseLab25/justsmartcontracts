@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
-import { useAccount, useConnect, useConnectors, type Connector } from "wagmi";
+import { useConnection, useConnect, useConnectors, type Connector } from "wagmi";
 
 export const useWalletConnectors = (): Connector[] => {
   const connectors = useConnectors();
-  const { connector: active } = useAccount();
+  const { connector: active } = useConnection();
 
   return useMemo(() => {
     const seen = new Set<string>();
@@ -29,7 +29,7 @@ export const useWalletConnectors = (): Connector[] => {
 
 export const useConnectWallet = () => {
   const { connect, isPending, error, reset } = useConnect();
-  const { isConnected } = useAccount();
+  const { isConnected } = useConnection();
 
   const connectWith = useCallback(
     (connector: Connector, onDone: () => void) => {
