@@ -1,2 +1,7 @@
 patchedDependencies:
   rc-util@5.44.4: patches/rc-util@5.44.4.patch
+
+# Neither script is needed to build: parcel's watcher is only for sass watch mode
+allowBuilds:
+  '@parcel/watcher': false
+  '@reown/appkit': false
